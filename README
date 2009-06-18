@@ -1,0 +1,4 @@
+This is a collection of wizards for use with EMC2.  The vision
+is that eventually they will all be packaged together into an
+emc2-wizards deb that can be easily installed.  Possibly, the
+wizards will be somehow integrated into the EMC GUIs.
