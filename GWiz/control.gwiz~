@@ -1,0 +1,20 @@
+Package: gwiz
+Version: .1
+Section: web 
+Priority: optional
+Architecture: all
+Essential: no
+Depends: emc2libwww-perl, acme-base (>= 1.2)
+Pre-Depends: perl 
+Recommends: mozilla | netscape  
+Suggests: docbook 
+Installed-Size: 1024
+Maintainer: Joe Brockmeier [jzb@dissociatedpress.net]
+Conflicts: wile-e-coyote
+Replaces: sam-sheepdog
+Provides: acme
+Description: The description can contain free-form text
+             describing the function of the program, what
+             kind of features it has, and so on.
+.
+More descriptive text.

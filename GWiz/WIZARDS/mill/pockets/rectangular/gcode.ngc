@@ -1,0 +1,6 @@
+(beginning of gcode subroutine)
+(1002 routine)
+(    00 version)
+(      000 internal label)
+O100200000 sub (rectangular pocket)
+O100200000 endsub

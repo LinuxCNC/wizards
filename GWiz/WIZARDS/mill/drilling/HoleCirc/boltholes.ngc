@@ -1,0 +1,56 @@
+(beginning of gcode subroutine)
+O<boltholes> sub (circular hole pattern)
+    #<centerX> = #1
+    #<centerY> = #2
+    #<radius> = #3
+    #<pattern_holes> = #4
+    #<n_holes> = #5
+    #<depth> = [0-#6]
+    #<clearance> = #7
+    #<angle> = #8
+
+    o100 if [#<n_holes> eq 0]
+        #<n_holes> = #<pattern_holes>
+    o100 endif
+
+    o1 if [#9 ne 0]
+        #<cycle> = #9
+    o1 else
+	#<cycle> = #10
+    o1 endif
+
+    #<op_mask> = 0
+    #<peck> = #11
+    o11 if [#<peck> NE 0]
+        #<op_mask> = [#<op_mask> OR 1]
+    o11 endif
+
+    #<dwell> = #12
+    o12 if [#<dwell> NE 0]
+        #<op_mask> = [#<op_mask> OR 2]
+    o12 endif
+
+    (working variables)
+    #<index> = 0
+    #<angle_incr> = [360/#<pattern_holes>]
+
+;    G0 Z#<clearance>
+;    G0 X#<centerX> Y#<centerY>
+    o2 while [#<index> LT #<n_holes>]
+        #<Xpos> = [#<centerX> + #<radius>*cos[#<angle>]]
+	#<Ypos> = [#<centerY> + #<radius>*sin[#<angle>]]
+        o3 if [#<op_mask> EQ 0]
+            G#<cycle> X#<Xpos> Y#<Ypos> Z#<depth> R#<clearance> F#<_feed_rate>
+	o3 elseif [#<op_mask> EQ 1]
+            G#<cycle> X[#<Xpos>] Y[#<Ypos>] Z[#<depth>] R[#<clearance>] F[#<_feed_rate>] Q[#<peck>]
+	o3 elseif [#<op_mask> EQ 2]
+            G#<cycle> X[#<Xpos>] Y[#<Ypos>] Z[#<depth>] R[#<clearance>] F[#<_feed_rate>] P[#<dwell>]
+	o3 elseif [#<op_mask> EQ 3]
+            G#<cycle> X[#<Xpos>] Y[#<Ypos>] Z[#<depth>] R[#<clearance>] F[#<_feed_rate>] P[#<dwell>] Q[#<peck>]
+	o3 endif
+
+        (bump to next hole position)
+        #<angle> = [#<angle> + #<angle_incr>]
+        #<index> = [#<index> + 1]
+    o2 endwhile
+O<boltholes> endsub

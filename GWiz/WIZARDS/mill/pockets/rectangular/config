@@ -1,0 +1,17 @@
+Mill A Rectangular Pocket
+S|Reference X|X coordinate of reference point|0.0
+S|Reference Y|Y coordinate of reference point|0.0
+U|Corner Radius|Radius of all corners|0.0
+U|Tool Diameter|Diameter of the tool|0.0
+U|Width|Width of the pocket|1.0
+U|Length|Length of the pocket|1.5
+L|Reference Point|Location of reference point|0|Center|1|UL|2|UR|3|LL|4|LR
+S|Rotation Angle|Angle for side|0
+S|Pocket Depth|The negative of the Z value at the bottom of the pocket|1.0
+U|Step Depth|The Z value to be subtracted at each step|.25
+S|Rapid Height|The Z value at which to do rapid moves. Cutting will start here|.25
+L|Climb or Normal|Climb milling or normal milling|0|climb|1|normal
+U|Percent Stepover|The percent of the tool diameter to step when increasing the hole diameter|50
+U|Radial Finish|The amount to cut on the radius for the finish cut|0.0
+U|Bottom Finish|The amount to cut on the pocket bottom for the finish cut|0.0
+U|Ramp Angle|The angle in degrees at which to ramp down when increasing depth|30

@@ -1,0 +1,63 @@
+Description of the files in each directory
+This file describes Version: 0.1
+
+version:
+   Contains a single line with two pipe ("|") delimited fields:
+      The version of the format (as described in this file)
+      The version of the wizard (assigned by the wizard creator)
+   Version identifiers are strings, e.g.: 0.1.1
+   At the present time, this file is NOT used.
+
+desc:
+  Contains a single line with two pipe ("|") delimited fields:
+     The O_word to be used with the operation
+     The title of the operation
+
+screen: (actually screen.png, screen.jpg, screen.(other format))
+  Contains a graphic image of the screen (400x300 pixels)
+  !!! FOR NOW -- screen.png only
+
+about.txt:
+  A help file for the operation. These lines may contain
+  (limited) html. If the file is missing, a No Help Available message is
+  displayed.
+
+config:
+  Contains the controls for the operation. Each control corresponds to an
+  argument passed to the gcode. They are in order of argument number.
+  Lines starting with # are comments and are ignored. The first line contains
+  description of the operation.
+
+  Fields are separated by '|':
+     type: a single character must be in first column
+     L - list selector
+     S - signed decimal S000.0000
+     U - unsigned decimal 000.0000
+
+     name: the name of the parameter
+
+     tooltip: a tool tip
+
+     For type 'L' a list of strings. The first string is the
+     default. The first is assigned the value zero, the second one,
+     etc. 
+
+     For type 'S' or U' a numeric default value is supplied.
+
+validate (not yet implemented):
+  A program or script in any language that returns 0 if the parameters
+  are valid or non-zero if they are invalid. It is run as a pipe with
+  the computed gcode as an input. If there is an error, standard
+  output (which is piped to the wizard) contains the errors. (As an
+  alternative, the args to the gcode are contained on the command
+  line.)
+
+*.ngc:
+  A gcode subroutine implementing the wizard. All global o-words defined in the
+  file should begin with the name of the subroutine. For example, if the 
+  subroutine implements o<mill_circular_pocket>, helper functions should be
+  named something like: o<mill_circular_pocket_initial>. The reason for this is
+  to avoid name space clashes. The name of the .ngc is not important. If there
+  are multiple .ngc files in the directory, all will be loaded in alphabetical
+  order.
+
