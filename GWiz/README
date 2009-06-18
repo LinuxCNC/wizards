@@ -1,0 +1,9 @@
+GWiz is a framework for building gcode wizards.
+
+To build a debian release, type "make all" at a shell prompt in this
+directory. Since a release is built to install as the root user, it
+uses sudo to get root privileges and will ask for your password.
+
+This will create two .deb files gwiz...deb and demowiz...deb. The
+demowiz file contains demo wizards, while the gwiz file contains gwiz,
+itself.
