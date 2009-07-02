@@ -9,6 +9,10 @@ import sys, os
 #import sys, time, traceback, types
 import dircache
 
+import Tkinter
+
+t = Tkinter.Tk(); t.wm_withdraw()
+
 BASE = os.path.abspath(os.path.join(os.path.dirname(sys.argv[0]), ".."))
 sys.path.insert(0, os.path.join(BASE, "lib", "python"))
 
@@ -299,6 +303,9 @@ class gWiz(wx.Frame):
         self.editing = False
 	self.editingMode = "insert" # None or "insert" or "edit"
 	self.mode = None # or "text" or "wizard"
+
+        self.convMode = "wiz" # wiz or conv (conversational)
+        self.wizardsLoaded = False
         
         self.bitmap = None
         self.loaded = False
@@ -511,7 +518,10 @@ class gWiz(wx.Frame):
                  'Down', self.OnDown),
                 (None,'', None, None, None),
 
-                 
+                ('convButton', 'Toggle' , buttonpath+'conversational.png',
+                 'Conversational Mode', self.OnConv),
+                (None,'', None, None, None),
+
                 ('acceptButton', '', buttonpath+'accept.png',
                  'Accept Changes', self.OnAccept),
                 ('rejectButton', '', buttonpath+'reject.png',
@@ -614,6 +624,24 @@ class gWiz(wx.Frame):
     def OnWizardDefault(self, event):
         pass
 
+    def OnConv(self, evt):
+        if GWiz.convMode == "conv":
+	    GWiz.convButton.SetValue(False)
+	    GWiz.convMode = "wiz"
+        else:
+            GWiz.convButton.SetValue(True)
+            GWiz.convMode = "conv"
+            if GWiz.wizardsLoaded == False:
+                GWiz.wizardsLoaded = True
+                #!!!KL need to put in a real file name...
+                filename = wizard_root+"/Conversational\ Mode.wiz"
+                print "file name:%s:" % filename
+                t.tk.call("send", "axis", "open_file_name", filename)
+            
+        evt.Skip()
+	return
+
+        
     def OnEdit(self, evt):
 
 	if self.currentItem == None:
@@ -799,6 +827,11 @@ class gWiz(wx.Frame):
 	GWiz.textArea.SetSelection(GWiz.currentItem)
 	GWiz.SetFileChanged(True)
         GWiz.EndEdit()
+
+        if GWiz.convMode == "conv":
+            #print "send_mdi_command:%s:" % line
+            t.tk.call("send", "axis", "send_mdi_commandx",
+                      ("puts", line))
 
     def OnReject(self, evt):
 	""" If inserting restore the current wizard to its default and
