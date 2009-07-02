@@ -2,7 +2,7 @@
 
 # Create a wizard debian release in the current directory
 
-VERSION=0.1.1
+VERSION=0.1.2
 RELEASE=WIZARDS.deb
 
 rm -rf ${RELEASE}

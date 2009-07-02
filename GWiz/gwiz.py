@@ -830,8 +830,7 @@ class gWiz(wx.Frame):
 
         if GWiz.convMode == "conv":
             #print "send_mdi_command:%s:" % line
-            t.tk.call("send", "axis", "send_mdi_commandx",
-                      ("puts", line))
+            t.tk.call("send", "axis", ("send_mdi_command", line))
 
     def OnReject(self, evt):
 	""" If inserting restore the current wizard to its default and
