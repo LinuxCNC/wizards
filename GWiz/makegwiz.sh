@@ -2,7 +2,7 @@
 
 # Create a gwiz debian release in the current directory
 
-VERSION=0.1.3
+VERSION=0.1.4
 RELEASE=GWIZ.deb
 
 rm -rf ${RELEASE}

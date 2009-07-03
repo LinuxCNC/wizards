@@ -1310,8 +1310,8 @@ class gWiz(wx.Frame):
 
 	  
             # this is how to scale an image
-            finishWidth = 400
-            finishHeight = 300
+            finishWidth = 400.0
+            finishHeight = 300.0
             aspectRatio = finishWidth * 1.0 / finishHeight
             imageAspectRatio = png.GetWidth() * 1.0 / png.GetHeight()
 
