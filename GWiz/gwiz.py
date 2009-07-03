@@ -1203,7 +1203,12 @@ class gWiz(wx.Frame):
         oword = wizard.Oword()
         item = wizard.Name()
 
-        child = self.tree.AppendItem(parent, item)
+        if self.root == None:
+            self.root = self.tree.AddRoot(item)
+            child = self.root
+
+        else:
+            child = self.tree.AppendItem(parent, item)
 
         self.tree.SetItemPyData(child, wizard)
 
@@ -1226,14 +1231,10 @@ class gWiz(wx.Frame):
         
     #---------------------------------------------
     def RecreateTree(self):
-        rootDirect = os.getcwd()
         self.tree.DeleteAllItems() 
 
-        self.root = self.tree.AddRoot("G-Code Wizards")
-        wizard = Wizard.FromDirectory(rootDirect)
-        self.tree.SetItemPyData(self.root, wizard)
-        # !!!KL
-        # self.TraverseTree(self.root, rootDirect+"/WIZARDS/")
+        self.root = None
+
         self.TraverseTree(self.root, wizard_root+"/")
 
         Wizard.DumpAll()
