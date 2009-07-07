@@ -595,8 +595,10 @@ class gWiz(wx.Frame):
             dialog.Destroy()
             
     def OnOpen(self, event):
-
         self.AskSaveFileIfNecessary()
+
+        self.DiscardOpenFile()
+        self.DisableBoth()
 
         # get the name of the file to open
         dlg = wx.FileDialog(
@@ -620,6 +622,8 @@ class gWiz(wx.Frame):
 
         # give focus to the text area
         GWiz.textArea.SetFocus()
+        GWiz.textArea.Enable()
+        
 
     def OnWizardDefault(self, event):
         pass
@@ -721,8 +725,7 @@ class gWiz(wx.Frame):
         print "DiscardOpenFile"
         self.fileIsOpen = False
 
-        GWiz.textArea.ClearAll()
-        GWiz.textArea.InsertColumn(0, "Line")
+        GWiz.textArea.Clear()
         GWiz.textLine.Clear()
 
     def OnNew(self, event):
@@ -752,7 +755,11 @@ class gWiz(wx.Frame):
             print "file:", f[0], ':'
 
             print "new path:", os.getcwd(),':'
-            self.openFileName = f[0]+".wiz"
+            if not f[0].endswith('.wiz'):
+                self.openFileName = f[0]+".wiz"
+            else:
+                self.openFileName = f[0]
+                
             self.WriteGcodeFile(self.openFileName)
 
     def WriteGcodeFile(self, fileName):
@@ -792,8 +799,6 @@ class gWiz(wx.Frame):
     def EnableBoth(self):
         GWiz.rejectButton.Enable()
         GWiz.acceptButton.Enable()
-        #!!!KL do not set edit mode -- only set manually
-	#GWiz.editButton.Disable()
 
     def OnAccept(self, evt):
 	if GWiz.mode == 'wizard':
@@ -925,9 +930,18 @@ class gWiz(wx.Frame):
             self.pasteBuffer = GWiz.textArea.GetString(self.currentItem)
     
     def OnPaste(self, event):
-        if self.currentItem:
+        if GWiz.editingMode == "edit":
+            if self.currentItem:
+                GWiz.SetFileChanged(True)
+                GWiz.textArea.SetString(self.currentItem, self.pasteBuffer)
+        else:
+            if self.currentItem:
+                self.currentItem += 1
+            else:
+                self.currentItem = 0
+
             GWiz.SetFileChanged(True)
-            GWiz.textArea.SetString(self.currentItem, self.pasteBuffer)
+            GWiz.textArea.InsertItems((self.pasteBuffer,),self.currentItem)
 
     def OnCut(self, event):
         if self.currentItem != None:
