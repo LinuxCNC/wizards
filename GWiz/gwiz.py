@@ -16,7 +16,7 @@ t = Tkinter.Tk(); t.wm_withdraw()
 BASE = os.path.abspath(os.path.join(os.path.dirname(sys.argv[0]), ".."))
 sys.path.insert(0, os.path.join(BASE, "lib", "python"))
 
-import emc
+import linuxcnc
 
 import wx                  # This module uses the new wx namespace
 
@@ -36,15 +36,15 @@ from wx.lib.stattext import GenStaticText
 home = os.getenv('HOME')
 
 if len(sys.argv) <= 2 or sys.argv[1] != "-ini":
-    emcrc = emc.ini(home + '/' + '.emcrc')
-    inifilename = emcrc.find("PICKCONFIG", "LAST_CONFIG")
+    linuxcncrc = linuxcnc.ini(home + '/' + '.linuxcncrc')
+    inifilename = linuxcncrc.find("PICKCONFIG", "LAST_CONFIG")
 
-    inifile = emc.ini(inifilename)
+    inifile = linuxcnc.ini(inifilename)
 
     if inifilename == None:
         raise SystemExit, "-ini must be first argument or must pick config"
 else:
-    inifile = emc.ini(sys.argv[2])
+    inifile = linuxcnc.ini(sys.argv[2])
 
 program_directory = inifile.find("DISPLAY", "PROGRAM_PREFIX")
 wizard_root = inifile.find("WIZARD", "WIZARD_ROOT")

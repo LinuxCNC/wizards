@@ -13,7 +13,7 @@ import string
 BASE = os.path.abspath(os.path.join(os.path.dirname(sys.argv[0]), ".."))
 sys.path.insert(0, os.path.join(BASE, "lib", "python"))
 
-import emc
+import linuxcnc
 
 home = os.getenv('HOME')
 
@@ -23,10 +23,10 @@ home = os.getenv('HOME')
 
 # read ini file stuff
 
-emcrc = emc.ini(home + '/' + '.emcrc')
-inifilename = emcrc.find("PICKCONFIG", "LAST_CONFIG")
+linuxcncrc = linuxcnc.ini(home + '/' + '.linuxcncrc')
+inifilename = linuxcncrc.find("PICKCONFIG", "LAST_CONFIG")
 
-inifile = emc.ini(inifilename)
+inifile = linuxcnc.ini(inifilename)
 
 if inifilename == None:
     raise SystemExit, "-ini must be first argument or must pick config"
