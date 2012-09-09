@@ -4,13 +4,13 @@ Section: misc
 Priority: extra
 Architecture: i386
 Essential: no
-Depends: emc2 (>= 2.3), python-wxglade
+Depends: linuxcnc | linuxcnc-sim, python-wxglade
 Recommends: gwizdemo
-Enhances: emc2
+Enhances: linuxcnc
 Suggests: 
 Installed-Size: 200000
 Maintainer: Kenneth Lerman [lerman-gwiz@se-ltd.com]
 Conflicts:
 Replaces: 
 Provides: gwiz
-Description: Provide a wizard framewirk for use with emc2 and axis that supports the creation of wizards by users who are not computer programmers.
+Description: Provide a wizard framewirk for use with linuxcnc and axis that supports the creation of wizards by users who are not computer programmers.
